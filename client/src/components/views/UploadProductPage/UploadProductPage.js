@@ -36,6 +36,9 @@ function UploadPage(props) {
     const categoryChangeHandler = event => {
         setCategory(event.currentTarget.value)
     }
+    const sizeChangeHandler = event => {
+        setSizes(event.currentTarget.value)
+    }
     const updateColors = newColors => {
         setColors(newColors)
     }
@@ -44,8 +47,7 @@ function UploadPage(props) {
     }
 
     const submitHandler = (event) => {
-        console.log('submitHandler')
-
+   
         event.preventDefault()
         
         if ( !Name || !Description || !Price || !Category || !Images.length === 0 ) {
@@ -84,11 +86,9 @@ function UploadPage(props) {
 
                 <label>분류</label>
                 <select onChange={categoryChangeHandler} value={Category}>
-                    {
-                        Categories.map(category => (
+                    { Categories.map(category => (
                             <option key={category.key} value={category.key}>{category.value}</option>
-                        ))
-                    }
+                    )) }
                 </select>
                 <label>이름</label>
                 <Input onChange={nameChangeHandler} value={Name} />
@@ -96,6 +96,12 @@ function UploadPage(props) {
                 <Input onChange={priceChangeHandler} value={Price} />
                 <label>설명</label>
                 <TextArea onChange={descriptionChangeHandler} value={Description} />
+                <label>사이즈</label>
+                {/* <select onChange={sizeChangeHandler} value={Sizes} />
+                        { Sizes.map(size => (
+                            <option key={size.key} value={size}>{size.value}</option>
+                        ))}
+                </select> */}
                 <label>색상</label>
                 <ColorPicker updateColors={updateColors}/>
 
