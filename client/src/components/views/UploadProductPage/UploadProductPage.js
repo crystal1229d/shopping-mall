@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import FileUploader from '../utils/FileUploader';
 import Axios from 'axios';
 import { Typography, Button, Form, Input } from 'antd';
@@ -24,6 +24,8 @@ function UploadPage(props) {
     const [Colors, setColors] = useState([])
     const [Sizes, setSizes] = useState([])
 
+    const sizeRef = useRef();
+
     const nameChangeHandler = event => {
         setName(event.currentTarget.value)
     }
@@ -36,8 +38,15 @@ function UploadPage(props) {
     const categoryChangeHandler = event => {
         setCategory(event.currentTarget.value)
     }
-    const sizeChangeHandler = event => {
-        setSizes(event.currentTarget.value)
+    const sizeAddHandler = () => {
+        setSizes([...Sizes, sizeRef.current.state.value])
+        sizeRef.current.state.value = ''
+        sizeRef.current.focus()
+    } 
+    const sizeDeleteHandler = (index) => {
+        const newSizes = Sizes
+        newSizes.splice(index, 1)
+        setSizes(newSizes)
     }
     const updateColors = newColors => {
         setColors(newColors)
@@ -50,7 +59,7 @@ function UploadPage(props) {
    
         event.preventDefault()
         
-        if ( !Name || !Description || !Price || !Category || !Images.length === 0 ) {
+        if ( !Name || !Description || !Price || !Category || Images.length === 0 || Colors.length === 0) {
             return alert("모든 값을 넣어주세요")
         }
 
@@ -97,11 +106,14 @@ function UploadPage(props) {
                 <label>설명</label>
                 <TextArea onChange={descriptionChangeHandler} value={Description} />
                 <label>사이즈</label>
-                {/* <select onChange={sizeChangeHandler} value={Sizes} />
-                        { Sizes.map(size => (
-                            <option key={size.key} value={size}>{size.value}</option>
-                        ))}
-                </select> */}
+                <div style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
+                <Input placeholder='Free' style={{ width:'120px' }} ref={sizeRef} />
+                <Button style={{ width:'120px' }} onClick={sizeAddHandler} >사이즈 등록</Button>
+                { Sizes.map((size, index) => (
+                    <div onClick={()=>sizeDeleteHandler(index)} key={index} style={{ minWidth:'20px', height:'20px', padding:'15px 10px', borderRadius:'3px', border:'1px solid lightgray', display:'flex', justifyContent:'center', alignItems:'center', cursor:'pointer' }}>{size}</div>
+                )) }
+                </div>
+                
                 <label>색상</label>
                 <ColorPicker updateColors={updateColors}/>
 

@@ -14,6 +14,9 @@ function ColorPicker(props) {
         setColorName(event.currentTarget.value)
     }
     const colorAddHandler = () => {
+        if ( !PickedColor.hex || !ColorName ) 
+            return alert('좌측 색상표를 클릭해 색상을 선택하고 색상 이름을 입력해주세요')
+
         setColors([...Colors, { 'hex': PickedColor.hex, 'name': ColorName }])
         props.updateColors([...Colors, { 'hex': PickedColor.hex, 'name': ColorName }])
     }
@@ -44,7 +47,7 @@ function ColorPicker(props) {
                     }}
                 >
                 { Colors.map(( {hex, name}, index) => (
-                    <div onClick={()=>colorDeleteHandler(index)} key={index} style={{ width:'20px', height:'20px', borderRadius:'50%', background:hex }}></div>
+                    <div onClick={()=>colorDeleteHandler(index)} key={index} style={{ width:'20px', height:'20px', borderRadius:'50%', background:hex, border:'1px solid lightgray' }}></div>
                 )) }
                 </div>
             </div>
