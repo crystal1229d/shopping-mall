@@ -3,6 +3,7 @@ import FileUploader from '../utils/FileUploader';
 import Axios from 'axios';
 import { Typography, Button, Form, Input } from 'antd';
 import ColorPicker from '../utils/ColorPicker';
+import SizeMaker from './Sections/SizeMaker';
 
 const { Title: TitleTag } = Typography;
 const { TextArea } = Input;
@@ -46,6 +47,9 @@ function UploadPage(props) {
     const sizeDeleteHandler = (index) => {
         const newSizes = Sizes
         newSizes.splice(index, 1)
+        setSizes(newSizes)
+    }
+    const updateSizes = newSizes => {
         setSizes(newSizes)
     }
     const updateColors = newColors => {
@@ -106,13 +110,14 @@ function UploadPage(props) {
                 <label>설명</label>
                 <TextArea onChange={descriptionChangeHandler} value={Description} />
                 <label>사이즈</label>
-                <div style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
-                <Input placeholder='Free' style={{ width:'120px' }} ref={sizeRef} />
-                <Button style={{ width:'120px' }} onClick={sizeAddHandler} >사이즈 등록</Button>
-                { Sizes.map((size, index) => (
-                    <div onClick={()=>sizeDeleteHandler(index)} key={index} style={{ minWidth:'20px', height:'20px', padding:'15px 10px', borderRadius:'3px', border:'1px solid lightgray', display:'flex', justifyContent:'center', alignItems:'center', cursor:'pointer' }}>{size}</div>
-                )) }
-                </div>
+                {/* <div style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
+                    <Input placeholder='Free' style={{ width:'120px' }} ref={sizeRef} />
+                    <Button style={{ width:'120px' }} onClick={sizeAddHandler} >사이즈 등록</Button>
+                    { Sizes.map((size, index) => (
+                        <div onClick={()=>sizeDeleteHandler(index)} key={index} style={{ minWidth:'20px', height:'20px', padding:'15px 10px', borderRadius:'3px', border:'1px solid lightgray', display:'flex', justifyContent:'center', alignItems:'center', cursor:'pointer' }}>{size}</div>
+                    )) }
+                </div> */}
+                <SizeMaker refreshFunction={updateSizes} />
                 
                 <label>색상</label>
                 <ColorPicker updateColors={updateColors}/>

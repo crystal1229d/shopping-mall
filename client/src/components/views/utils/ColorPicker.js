@@ -4,8 +4,8 @@ import { Input, Button } from 'antd';
 
 function ColorPicker(props) {
     const [Colors, setColors] = useState([])
-    const [PickedColor, setPickedColor] = useState("#FFFFFF")
-    const [ColorName, setColorName] = useState('white')
+    const [PickedColor, setPickedColor] = useState('')
+    const [ColorName, setColorName] = useState('')
 
     const colorChangeHandler = (color) => {
         setPickedColor(color)
@@ -20,7 +20,6 @@ function ColorPicker(props) {
         setColors([...Colors, { 'hex': PickedColor.hex, 'name': ColorName }])
         props.updateColors([...Colors, { 'hex': PickedColor.hex, 'name': ColorName }])
     }
-
     const colorDeleteHandler = (index) => {
         // const currentIndex = Colors.indexOf(color)
 
@@ -29,6 +28,9 @@ function ColorPicker(props) {
 
         setColors(newColors)
         props.updateColors(newColors)
+    }
+    const colorMouseOverHandler = (index) => {
+        
     }
 
     return (
@@ -47,7 +49,7 @@ function ColorPicker(props) {
                     }}
                 >
                 { Colors.map(( {hex, name}, index) => (
-                    <div onClick={()=>colorDeleteHandler(index)} key={index} style={{ width:'20px', height:'20px', borderRadius:'50%', background:hex, border:'1px solid lightgray' }}></div>
+                    <div onClick={()=>colorDeleteHandler(index)} onMouseOver={()=>colorMouseOverHandler(index)} key={index} style={{ width:'20px', height:'20px', borderRadius:'50%', background:hex, border:'1px solid lightgray' }}></div>
                 )) }
                 </div>
             </div>
