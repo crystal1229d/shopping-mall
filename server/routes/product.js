@@ -43,18 +43,22 @@ router.post("/image", (req, res) => {
 })
 
 router.post("/products", (req, res) => {
+    
+    let findArgs = {};
+
     // 모든 상품 정보 조회
-    // Product
-    // .find(findArgs)
-    // .populate("writer")
-    // .exec((err, productInfo) => {
-    //     if (err) return res.status(400).json({ success: false, err })
-    //     return res.status(200).json({
-    //         success: true,
-    //         productInfo,
-    //         postSize: productInfo.length 
-    //     })
-    // })
+    Product
+    .find(findArgs)
+    .populate("writer")
+    .exec((err, productInfo) => {
+        console.log(productInfo)
+        if (err) return res.status(400).json({ success: false, err })
+        return res.status(200).json({
+            success: true,
+            productInfo,
+            postSize: productInfo.length 
+        })
+    })
 })
 
 
