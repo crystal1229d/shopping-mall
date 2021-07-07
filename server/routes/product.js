@@ -51,7 +51,7 @@ router.post("/products", (req, res) => {
     .find(findArgs)
     .populate("writer")
     .exec((err, productInfo) => {
-        console.log(productInfo)
+        // console.log(productInfo)
         if (err) return res.status(400).json({ success: false, err })
         return res.status(200).json({
             success: true,
