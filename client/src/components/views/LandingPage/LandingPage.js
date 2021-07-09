@@ -35,7 +35,7 @@ function LandingPage() {
         return (
             <Col key={index} lg={6} md={8} xs={24}>
                 <Card
-                    cover={<a href="#"></a>}>
+                    cover={<a href="#"><img style={{ width:'100%', height:'150px' }} alt={product.name} src={`http://localhost:5000/${product.images[0]}`}/></a>}>
                 <Meta title={product.name} description={product.price} />
                 </Card>
             </Col>
@@ -43,8 +43,13 @@ function LandingPage() {
     })
 
     return (
-        <div style={{ width:'80%', margin:'1px solid lightgrey' }}>
-            <Row gutter={16}>
+        <div style={{ width:'80%', margin:'3rem auto' }}>
+
+            <div style={{ textAlign:'center' }}>
+                OOTD
+            </div>
+
+            <Row gutter={[16, 16]}>
                 { renderCards }
             </Row>
         </div>
