@@ -8,7 +8,7 @@ function LandingPage() {
 
     const [Products, setProducts] = useState([])
     const [Skip, setSkip] = useState(0)
-    const [Limit, setLimit] = useState(0)
+    const [Limit, setLimit] = useState(8)
 
     useEffect(() => {
         let body = {
@@ -49,9 +49,18 @@ function LandingPage() {
                 OOTD
             </div>
 
+            {/* Filter */}
+            {/* CheckBox */}
+            {/* RadioBox */}
+
+            {/* Search */}
+
             <Row gutter={[16, 16]}>
                 { renderCards }
             </Row>
+
+            {/* MoreButton */}
+
         </div>
     )
 }

@@ -43,6 +43,11 @@ router.post("/image", (req, res) => {
 })
 
 router.post("/products", (req, res) => {
+
+    console.log(req)
+
+    let limit = req.body.limit ? parseInt(req.body.limit) : 20;
+    let skip = req.body.skip ? parseInt(req.body.skip) : 0;
     
     let findArgs = {};
 
