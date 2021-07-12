@@ -55,6 +55,8 @@ router.post("/products", (req, res) => {
     Product
     .find(findArgs)
     .populate("writer")
+    .skip(skip)
+    .limit(limit)
     .exec((err, productInfo) => {
         // console.log(productInfo)
         if (err) return res.status(400).json({ success: false, err })
