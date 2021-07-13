@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Row } from 'antd';
+import SearchFeature from './Sections/SearchFeature';
 
 const { Meta } = Card;
 
@@ -10,6 +11,7 @@ function LandingPage() {
     const [Skip, setSkip] = useState(0)
     const [Limit, setLimit] = useState(8)
     const [PostSize, setPostSize] = useState(0)
+    const [SearchTerm, setSearchTerm] = useState('')
 
     useEffect(() => {
         let body = {
@@ -25,8 +27,11 @@ function LandingPage() {
         .then(response => {
             console.log('getProducts response.data', response.data)
             if (response.data.success) {
-                console.log('body', body)
-                setProducts(response.data.productInfo)
+                if (body.loadMore) {
+                    setProducts([...Products, ...response.data.productInfo])
+                } else {
+                    setProducts(response.data.productInfo)
+                }
 
                 setPostSize(response.data.postSize)
             } else {
@@ -48,8 +53,23 @@ function LandingPage() {
         setSkip(skip)
     }
 
+    const updateSearchTerm = (newSearchTerm) => {
+        
+        console.log('updateSearchTerm', newSearchTerm)
+
+        let body = {
+            skip: 0,
+            limit: Limit,
+            searchTerm: newSearchTerm
+        }
+
+        setSkip(0)
+        setSearchTerm(newSearchTerm)
+        getProducts(body)
+    }
+
     const renderCards = Products.map((product, index) => {
-        console.log('renderCards', index, product)
+        // console.log('renderCards', index, product)
         return (
             <Col key={index} lg={6} md={8} xs={24}>
                 <Card
@@ -72,6 +92,9 @@ function LandingPage() {
             {/* RadioBox */}
 
             {/* Search */}
+            <div>
+                <SearchFeature refreshFunction={updateSearchTerm} />
+            </div>
 
             <Row gutter={[16, 16]}>
                 { renderCards }
