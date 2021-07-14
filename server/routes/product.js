@@ -44,15 +44,32 @@ router.post("/image", (req, res) => {
 
 router.post("/products", (req, res) => {
 
+    
+    // products collection 에 들어 있는 모든 상품 정보 가져오기
+
     let limit = req.body.limit ? parseInt(req.body.limit) : 20;
     let skip = req.body.skip ? parseInt(req.body.skip) : 0;
-    let term = req.body.searchTerm;
-    
+    let term = req.body.searchTerm
+
     let findArgs = {};
+console.log(limit, skip, term)
+    // for (let key in req.body.filters) {
+    //     if (req.body.filters[key].length > 0) {
 
-    // 모든 상품 정보 조회
+    //         if (key === "price") {
+    //             findArgs[key] = {
+    //                 $gte: req.body.filters[key][0], // greater than equal
+    //                 $lte: req.body.filters[key][1] // less than equal 
+    //             }
+    //         } else {
+    //             findArgs[key] = req.body.filters[key]
+    //         }
+            
+    //     }
+    // }
+
     if (term) {
-
+  
         Product
         .find(findArgs)
         .find({ $text: { $search: term } })
@@ -60,8 +77,6 @@ router.post("/products", (req, res) => {
         .skip(skip)
         .limit(limit)
         .exec((err, productInfo) => {
-            console.log('productInfo', productInfo)
-
             if (err) return res.status(400).json({ success: false, err })
             return res.status(200).json({ 
                 success: true, 
@@ -71,24 +86,23 @@ router.post("/products", (req, res) => {
         })
 
     } else {
-
+         
         Product
         .find(findArgs)
-        .populate("writer")
+        .populate("writer") // writer 에 대한 모든 정보 가져오기
         .skip(skip)
         .limit(limit)
         .exec((err, productInfo) => {
-            console.log('productInfo', productInfo)
-            
             if (err) return res.status(400).json({ success: false, err })
-            return res.status(200).json({
-                success: true,
+            return res.status(200).json({ 
+                success: true, 
                 productInfo,
-                postSize: productInfo.length 
+                postSize: productInfo.length
             })
         })
 
     }
+
     
 })
 
