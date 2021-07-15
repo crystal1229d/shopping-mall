@@ -2,6 +2,9 @@ import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Row } from 'antd';
 import SearchFeature from './Sections/SearchFeature';
+import CheckBox from './Sections/CheckBox';
+import RadioBox from './Sections/RadioBox';
+import { categories, price } from './Sections/Datas';
 
 const { Meta } = Card;
 
@@ -11,7 +14,7 @@ function LandingPage() {
     const [Skip, setSkip] = useState(0)
     const [Limit, setLimit] = useState(8)
     const [PostSize, setPostSize] = useState(0)
-    const [SearchTerm, setSearchTerm] = useState('')
+    const [SearchTerm, setSearchTerm] = useState("")
 
     useEffect(() => {
         let body = {
@@ -55,8 +58,6 @@ function LandingPage() {
 
     const updateSearchTerm = (newSearchTerm) => {
         
-        console.log('updateSearchTerm', newSearchTerm)
-
         let body = {
             skip: 0,
             limit: Limit,
@@ -80,16 +81,28 @@ function LandingPage() {
         )
     })
 
+    const handleFilters = (filters, category) => {
+
+    }
+
     return (
         <div style={{ width:'75%', margin:'3rem auto' }}>
 
             <div style={{ textAlign:'center' }}>
-                OOTD
+                SHOW YOURSELF WITH CLOTHES
             </div>
 
             {/* Filter */}
-            {/* CheckBox */}
-            {/* RadioBox */}
+            <Row gutter={[16,16]}>
+                <Col lg={12} xs={24}>
+                    {/* CheckBox */}
+                    <CheckBox list={categories} handeFilters={filters => handleFilters(filters, "categories")} />
+                </Col>
+                <Col lg={12} xs={24}>
+                    {/* RadioBox */}
+                    <RadioBox />
+                </Col>
+            </Row>
 
             {/* Search */}
             <div>

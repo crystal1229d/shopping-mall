@@ -44,7 +44,6 @@ router.post("/image", (req, res) => {
 
 router.post("/products", (req, res) => {
 
-    
     // products collection 에 들어 있는 모든 상품 정보 가져오기
 
     let limit = req.body.limit ? parseInt(req.body.limit) : 20;
@@ -77,6 +76,9 @@ console.log(limit, skip, term)
         .skip(skip)
         .limit(limit)
         .exec((err, productInfo) => {
+            productInfo.map((item, index) => {
+                console.log(index, item.name, item.description);
+            })
             if (err) return res.status(400).json({ success: false, err })
             return res.status(200).json({ 
                 success: true, 
