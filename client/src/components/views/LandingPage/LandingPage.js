@@ -4,7 +4,7 @@ import { Button, Card, Col, Row } from 'antd';
 import SearchFeature from './Sections/SearchFeature';
 import CheckBox from './Sections/CheckBox';
 import RadioBox from './Sections/RadioBox';
-import { categories, price } from './Sections/Datas';
+import { categories, prices } from './Sections/Datas';
 
 const { Meta } = Card;
 
@@ -14,6 +14,10 @@ function LandingPage() {
     const [Skip, setSkip] = useState(0)
     const [Limit, setLimit] = useState(8)
     const [PostSize, setPostSize] = useState(0)
+    const [Filters, setFilters] = useState({
+        categories: [],
+        prices: [] 
+    })
     const [SearchTerm, setSearchTerm] = useState("")
 
     useEffect(() => {
@@ -70,7 +74,6 @@ function LandingPage() {
     }
 
     const renderCards = Products.map((product, index) => {
-        // console.log('renderCards', index, product)
         return (
             <Col key={index} lg={6} md={8} xs={24}>
                 <Card
@@ -82,14 +85,16 @@ function LandingPage() {
     })
 
     const handleFilters = (filters, category) => {
+        const Filters = { ... Filters }
 
+        
     }
 
     return (
         <div style={{ width:'75%', margin:'3rem auto' }}>
 
             <div style={{ textAlign:'center' }}>
-                SHOW YOURSELF WITH CLOTHES
+                SHOW YOURSELF WITH US
             </div>
 
             {/* Filter */}
@@ -100,12 +105,12 @@ function LandingPage() {
                 </Col>
                 <Col lg={12} xs={24}>
                     {/* RadioBox */}
-                    <RadioBox />
+                    <RadioBox list={prices} handleFilters={filters => handleFilters(filters, "price")} />
                 </Col>
             </Row>
 
             {/* Search */}
-            <div>
+            <div style={{ display:'flex', justifyContent:'flex-end', margin:'1rem auto' }}>
                 <SearchFeature refreshFunction={updateSearchTerm} />
             </div>
 
