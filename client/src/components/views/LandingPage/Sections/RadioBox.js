@@ -14,9 +14,8 @@ function RadioBox(props) {
     )
     
     const handleChange = (event) => {
-        console.log(event)
-        // setValue()
-
+        setValue(event.target.value)
+        props.handleFilters(event.target.value)
     }
 
     return (

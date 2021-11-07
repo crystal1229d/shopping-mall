@@ -1,4 +1,4 @@
-const categories = [
+const category = [
     {
         "_id": 1,
         "name": "Outer"
@@ -21,7 +21,7 @@ const categories = [
     }
 ]
 
-const prices = [
+const price = [
     {
         "_id": 0,
         "name": "All",
@@ -50,5 +50,5 @@ const prices = [
 ]
 
 export {
-    categories, prices
+    category, price
 }

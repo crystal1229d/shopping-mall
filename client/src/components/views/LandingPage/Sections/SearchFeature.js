@@ -4,7 +4,7 @@ import { Input } from 'antd';
 const { Search } = Input;
 
 function SearchFeature(props) {
-    const [SearchTerm, setSearchTerm] = useState('')
+    const [SearchTerm, setSearchTerm] = useState("")
 
     const SearchHandler = (event) => {
         setSearchTerm(event.currentTarget.value)

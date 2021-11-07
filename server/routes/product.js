@@ -51,24 +51,26 @@ router.post("/products", (req, res) => {
     let term = req.body.searchTerm
 
     let findArgs = {};
-console.log(limit, skip, term)
-    // for (let key in req.body.filters) {
-    //     if (req.body.filters[key].length > 0) {
 
-    //         if (key === "price") {
-    //             findArgs[key] = {
-    //                 $gte: req.body.filters[key][0], // greater than equal
-    //                 $lte: req.body.filters[key][1] // less than equal 
-    //             }
-    //         } else {
-    //             findArgs[key] = req.body.filters[key]
-    //         }
+    console.log('routes/product.js', limit, skip, term, req.body.filters)
+
+    for (let key in req.body.filters) {
+        if (req.body.filters[key].length > 0) {
+
+            if (key === "price") {
+                findArgs[key] = {
+                    $gte: req.body.filters[key][0], // greater than equal
+                    $lte: req.body.filters[key][1] // less than equal 
+                }
+            } else {
+                findArgs[key] = req.body.filters[key]
+            }
             
-    //     }
-    // }
+        }
+    }
 
     if (term) {
-  
+
         Product
         .find(findArgs)
         .find({ $text: { $search: term } })

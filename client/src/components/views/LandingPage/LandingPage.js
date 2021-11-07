@@ -4,7 +4,7 @@ import { Button, Card, Col, Row } from 'antd';
 import SearchFeature from './Sections/SearchFeature';
 import CheckBox from './Sections/CheckBox';
 import RadioBox from './Sections/RadioBox';
-import { categories, prices } from './Sections/Datas';
+import { category, price } from './Sections/Datas';
 
 const { Meta } = Card;
 
@@ -15,8 +15,8 @@ function LandingPage() {
     const [Limit, setLimit] = useState(8)
     const [PostSize, setPostSize] = useState(0)
     const [Filters, setFilters] = useState({
-        categories: [],
-        prices: [] 
+        category: [],
+        price: [] 
     })
     const [SearchTerm, setSearchTerm] = useState("")
 
@@ -32,7 +32,7 @@ function LandingPage() {
     const getProducts = (body) => {
         Axios.post('/api/product/products', body)
         .then(response => {
-            console.log('getProducts response.data', response.data)
+            // console.log('getProducts response.data', response.data)
             if (response.data.success) {
                 if (body.loadMore) {
                     setProducts([...Products, ...response.data.productInfo])
@@ -65,6 +65,7 @@ function LandingPage() {
         let body = {
             skip: 0,
             limit: Limit,
+            filters: Filters,
             searchTerm: newSearchTerm
         }
 
@@ -84,10 +85,43 @@ function LandingPage() {
         )
     })
 
-    const handleFilters = (filters, category) => {
-        const Filters = { ... Filters }
+    const showFilteredResults = (filters) => {
 
-        
+        let body = {
+            skip: 0,
+            limit: Limit,
+            filters: filters 
+        }
+
+        setSkip(0)
+        getProducts(body)
+    }
+
+    const handlePrice = (value) => {
+        const data = price
+        let array = []
+
+        for (let key in data) {
+            if (data[key]._id === parseInt(value, 10)) {
+                array = data[key].array
+            }
+        }
+
+        return array
+    }
+
+    const handleFilters = (filters, category) => {
+        const newFilters = { ...Filters }
+
+        newFilters[category] = filters
+
+        if (category === 'price') {
+            let priceValue = handlePrice(filters)
+            newFilters[category] = priceValue
+        }
+
+        setFilters(newFilters)
+        showFilteredResults(newFilters)
     }
 
     return (
@@ -101,11 +135,11 @@ function LandingPage() {
             <Row gutter={[16,16]}>
                 <Col lg={12} xs={24}>
                     {/* CheckBox */}
-                    <CheckBox list={categories} handeFilters={filters => handleFilters(filters, "categories")} />
+                    <CheckBox list={category} handleFilters={filters => handleFilters(filters, "category")} />
                 </Col>
                 <Col lg={12} xs={24}>
                     {/* RadioBox */}
-                    <RadioBox list={prices} handleFilters={filters => handleFilters(filters, "price")} />
+                    <RadioBox list={price} handleFilters={filters => handleFilters(filters, "price")} />
                 </Col>
             </Row>
 
