@@ -4,6 +4,7 @@ import { Button, Card, Col, Row } from 'antd';
 import SearchFeature from './Sections/SearchFeature';
 import CheckBox from './Sections/CheckBox';
 import RadioBox from './Sections/RadioBox';
+import ImageSlider from '../utils/ImageSlider';
 import { category, price } from './Sections/Datas';
 
 const { Meta } = Card;
@@ -78,8 +79,11 @@ function LandingPage() {
         return (
             <Col key={index} lg={6} md={8} xs={24}>
                 <Card
-                    cover={<a href="#"><img style={{ width:'100%', height:'150px' }} alt={product.name} src={`http://localhost:5000/${product.images[0]}`}/></a>}>
-                <Meta title={product.name} description={product.price} />
+                    cover={<a href="#"><ImageSlider images={product.images}/></a>}>
+                <Meta 
+                    title={product.name} 
+                    description={product.price} 
+                />
                 </Card>
             </Col>
         )
