@@ -110,6 +110,14 @@ router.post("/products", (req, res) => {
     
 })
 
+router.get('/products_by_id', (req, res) => {
+    // let type = req.query.type
+    // let productIds = req.query.id
+
+    console.log(req)
+
+})
+
 
 
 module.exports = router;
