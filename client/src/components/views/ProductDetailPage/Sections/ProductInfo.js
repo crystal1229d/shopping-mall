@@ -1,10 +1,15 @@
 import React from 'react'
 import { Button, Descriptions } from 'antd'
 import { useDispatch } from 'react-redux'
+import { addToCart } from '../../../../_actions/user_actions' // import action 
 
 function ProductInfo(props) {
 
+    const dispatch = useDispatch(); // redux hook
+
     const clickHandler = () => {
+
+        dispatch(addToCart(props.detail._id))
 
     }
 
