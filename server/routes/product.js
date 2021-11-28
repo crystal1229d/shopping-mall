@@ -111,10 +111,19 @@ router.post("/products", (req, res) => {
 })
 
 router.get('/products_by_id', (req, res) => {
-    let type = req.query.type
-    let productId = req.query.id
 
-    Product.find({ _id: productId })
+    let type = req.query.type
+    let productIds = req.query.id
+
+    if (type === 'array') {
+        // id=123123, 111111, 222222 => ['123123', '111111', '222222']
+        let ids = req.query.id.split(',');
+        productIds = ids.map(item => {
+            return item;
+        })
+    }
+
+    Product.find({ _id: {$in: productIds } })
         .populate("writer")
         .exec((err, product) => {
             if (err) return res.status(400).send(err)
