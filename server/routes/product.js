@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const multer = require('multer');
 const router = express.Router();
@@ -12,7 +13,6 @@ router.post('/', (req, res) => {
     const product = new Product(req.body)
 
     product.save((err) => {
-        console.log(err)
         if (err) return res.status(400).json({ success: false, err })
         return res.status(200).json({ success: true })
     })
@@ -130,6 +130,5 @@ router.get('/products_by_id', (req, res) => {
             return res.status(200).send(product)
         })
 })
-
 
 module.exports = router;
